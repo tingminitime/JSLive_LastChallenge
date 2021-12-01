@@ -1,0 +1,44 @@
+@mixin mobile
+  @media (max-width: 767px)
+    @content
+
+@mixin pad
+  @media (max-width: 768px)
+    @content
+
+@mixin padPro
+  @media (max-width: 1024px)
+    @content
+
+@mixin desk
+  @media (min-width: 769px)
+    @content
+
+// @mixin font($size: 18, $weight: 400, $unit: px)
+//   font-size: #{$size}#{$unit}
+//   font-weight: $weight
+//   @if $weight > 400
+//     letter-spacing: .05rem
+
+@mixin font($level: 0, $weight: normal)
+  font-size: font($level)
+  font-weight: $weight
+
+@mixin shadow($x: 0, $y: 14, $blur: 24, $spread: 0, $color: $shadow)
+  box-shadow: #{$x}px #{$y}px #{$blur}px #{$spread}px $color
+
+@mixin ff
+  font-family: 'Noto Sans TC', Arial, sans-serif
+
+@mixin backgroundImg($imageLink)
+  background-image: $imageLink
+  background-repeat: no-repeat
+
+// 超出字數設置 ...
+@mixin wordsEllipsis($row: 1)
+  text-overflow: ellipsis
+  overflow: hidden
+  display: -webkit-box
+  -webkit-line-clamp: $row //行數
+  -webkit-box-orient: vertical
+  white-space: normal
