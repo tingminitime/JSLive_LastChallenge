@@ -1,0 +1,42 @@
+.opinion
+  padding: 80px 0 60px 0
+  background-color: $darkBlue
+  p
+    line-height: 1.2
+  &__title
+    color: #fff
+    margin-bottom: 32px
+  &__list
+    +mobile
+      padding: 16px
+  &__item
+    width: 31.3333%
+    min-width: 280px
+    margin: 0 1% 20px 1%
+    border-radius: 8px
+    overflow: hidden
+    +shadow
+    +mobile
+      width: 100%
+  &__link
+    background-color: #fff
+  &__img
+    margin-right: 16px
+    min-width: 100px
+    > img
+      width: 100%
+      height: 100%
+      object-fit: cover
+  &__content
+    padding-right: 12px
+  &__info
+    margin-bottom: 8px
+  &__avatar
+    margin-right: 8px
+    border-radius: 50%
+    overflow: hidden
+  &__prodName
+    color: $lightBlue
+    +wordsEllipsis
+  &__message
+    +wordsEllipsis(2)

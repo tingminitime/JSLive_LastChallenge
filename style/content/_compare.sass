@@ -1,0 +1,25 @@
+.compare
+  background-color: $bgGray
+  padding: 48px 0 60px 0
+  &__title
+    margin-bottom: 32px
+  &__table
+    margin: 0 auto
+    tr
+      border-bottom: 1px solid $lineGray
+    th, td
+      line-height: 1.5
+      padding-top: 12px
+      padding-bottom: 12px
+    th, td:not(:first-child)
+      padding-left: 16px
+      padding-right: 16px
+      text-align: center
+    td:first-child
+      padding-right: 16px
+    th, tr > td:first-child
+      +font(1)
+      letter-spacing: .1rem
+    i
+      color: $lightBlue
+      +font(4, 700)

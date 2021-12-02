@@ -12,6 +12,7 @@
     content="width=device-width, initial-scale=1.0"
   >
   <title>WOWOROOM</title>
+  <!-- Material Icons -->
   <link
     href="https://fonts.googleapis.com/css2?family=Material+Icons"
     rel="stylesheet"
@@ -23,13 +24,399 @@
 </head>
 
 <body>
-  <nav class="topbar"></nav>
-  <header class="header"></header>
-  <div class="compare"></div>
-  <div class="opinion"></div>
-  <div class="products"></div>
-  <div class="cart"></div>
-  <div class="order"></div>
+  <div class="mask"></div>
+  <nav class="topbar container flex-sb-center">
+    <a
+      href="javascript:;"
+      class="logo flex-center"
+    >
+      <img
+        src="img/logo.svg"
+        alt="woworoom logo"
+      >
+    </a>
+    <ul class="menu flex">
+      <li class="menu__item">
+        <a
+          href="javascript:;"
+          class="menu__link"
+        >床墊優勢</a>
+      </li>
+      <li class="menu__item">
+        <a
+          href="javascript:;"
+          class="menu__link"
+        >好評推薦</a>
+      </li>
+      <li class="menu__item">
+        <a
+          href="javascript:;"
+          class="menu__link"
+        >運送方式</a>
+      </li>
+      <li class="menu__item">
+        <a
+          href="javascript:;"
+          class="menu__link highlight"
+        >立即預訂</a>
+      </li>
+    </ul>
+    <button class="menu__btn">
+      <i class="material-icons">
+        menu
+      </i>
+    </button>
+    <div class="menu-mobile">
+      <button class="menu-mobile__toggle">
+        <i class="material-icons">
+          chevron_left
+        </i>
+      </button>
+      <ul class="menu-mobile__list">
+        <li class="menu-mobile__item">
+          <a
+            href="javascript:;"
+            class="menu-mobile__link"
+          >床墊優勢</a>
+        </li>
+        <li class="menu-mobile__item">
+          <a
+            href="javascript:;"
+            class="menu-mobile__link"
+          >好評推薦</a>
+        </li>
+        <li class="menu-mobile__item">
+          <a
+            href="javascript:;"
+            class="menu-mobile__link"
+          >運送方式</a>
+        </li>
+        <li class="menu-mobile__item">
+          <a
+            href="javascript:;"
+            class="menu-mobile__link highlight"
+          >立即預訂</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="topbar__separateLine"></div>
+  <header class="header container">
+    <div class="banner">
+      <h3 class="banner__text">窩窩家居<br>跟您一起品味生活</h3>
+      <div class="banner__img">
+        <img
+          src="img/header-banner.png"
+          alt="header banner"
+        >
+      </div>
+    </div>
+    <div class="header__content">
+      <h2 class="header__title contentTitle">床墊優勢</h2>
+      <ul class="header__list flex-sb">
+        <li class="header__item">
+          <div class="header__item-img">
+            <img
+              src="img/header-advantage1.png"
+              alt="advantage image"
+            >
+          </div>
+          <p class="header__item-text">原木料環保</p>
+        </li>
+        <li class="header__item">
+          <div class="header__item-img">
+            <img
+              src="img/header-advantage2.png"
+              alt="advantage image"
+            >
+          </div>
+          <p class="header__item-text">好收納</p>
+        </li>
+        <li class="header__item">
+          <div class="header__item-img">
+            <img
+              src="img/header-advantage3.png"
+              alt="advantage image"
+            >
+          </div>
+          <p class="header__item-text">好組裝</p>
+        </li>
+      </ul>
+    </div>
+  </header>
+  <div class="compare">
+    <div class="container">
+      <h2 class="compare__title contentTitle">家具比較</h2>
+      <table class="compare__table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>窩窩系統模組家具</th>
+            <th class="text-gray">組合式家具</th>
+            <th class="text-gray">實木家具</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>可單人自行組裝</td>
+            <td>
+              <i class="material-icons">
+                done
+              </i>
+            </td>
+            <td class="text-gray">不一定</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>可多次重複拆裝</td>
+            <td>
+              <i class="material-icons">
+                done
+              </i>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>床墊規格彈性大</td>
+            <td>
+              <i class="material-icons">
+                done
+              </i>
+            </td>
+            <td class="text-gray">不一定</td>
+            <td class="text-gray">不一定</td>
+          </tr>
+          <tr>
+            <td>材質可長久使用</td>
+            <td>
+              <i class="material-icons">
+                done
+              </i>
+            </td>
+            <td></td>
+            <td>
+              <i class="material-icons">
+                done
+              </i>
+            </td>
+          </tr>
+          <tr>
+            <td>小客車即可搬運</td>
+            <td>
+              <i class="material-icons">
+                done
+              </i>
+            </td>
+            <td class="text-gray">不一定</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="opinion">
+    <div class="container">
+      <h2 class="opinion__title contentTitle">好評推薦</h2>
+      <ul class="opinion__list flex-wrap flex-center">
+        <li class="opinion__item">
+          <a
+            href="javascript:;"
+            class="opinion__link flex"
+          >
+            <div class="opinion__img">
+              <img
+                src="https://picsum.photos/100/100?random=1"
+                alt="product picture"
+              >
+            </div>
+            <div class="opinion__content flex-col flex-center-start">
+              <div class="opinion__info flex-start-center">
+                <div class="opinion__avatar">
+                  <img
+                    src="https://i.pravatar.cc/40"
+                    alt="user avatar"
+                  >
+                </div>
+                <div class="opinion__infoContent flex-col flex-center-stretch">
+                  <p class="opinion__userName">王六角</p>
+                  <p class="opinion__prodName">Louvre 雙人床架</p>
+                </div>
+              </div>
+              <p class="opinion__message">非常舒適，有需要會再回購。非常舒適，有需要會再回購。非常舒適，有需要會再回購。</p>
+            </div>
+          </a>
+        </li>
+        <li class="opinion__item">
+          <a
+            href="javascript:;"
+            class="opinion__link flex"
+          >
+            <div class="opinion__img">
+              <img
+                src="https://picsum.photos/100/100?random=1"
+                alt="product picture"
+              >
+            </div>
+            <div class="opinion__content flex-col flex-center-start">
+              <div class="opinion__info flex-start-center">
+                <div class="opinion__avatar">
+                  <img
+                    src="https://i.pravatar.cc/40"
+                    alt="user avatar"
+                  >
+                </div>
+                <div class="opinion__infoContent flex-col flex-center-stretch">
+                  <p class="opinion__userName">王六角</p>
+                  <p class="opinion__prodName">Louvre 雙人床架</p>
+                </div>
+              </div>
+              <p class="opinion__message">非常舒適，有需要會再回購。非常舒適，有需要會再回購。非常舒適，有需要會再回購。</p>
+            </div>
+          </a>
+        </li>
+        <li class="opinion__item">
+          <a
+            href="javascript:;"
+            class="opinion__link flex"
+          >
+            <div class="opinion__img">
+              <img
+                src="https://picsum.photos/100/100?random=1"
+                alt="product picture"
+              >
+            </div>
+            <div class="opinion__content flex-col flex-center-start">
+              <div class="opinion__info flex-start-center">
+                <div class="opinion__avatar">
+                  <img
+                    src="https://i.pravatar.cc/40"
+                    alt="user avatar"
+                  >
+                </div>
+                <div class="opinion__infoContent flex-col flex-center-stretch">
+                  <p class="opinion__userName">王六角</p>
+                  <p class="opinion__prodName">Louvre 雙人床架</p>
+                </div>
+              </div>
+              <p class="opinion__message">非常舒適，有需要會再回購。</p>
+            </div>
+          </a>
+        </li>
+        <li class="opinion__item">
+          <a
+            href="javascript:;"
+            class="opinion__link flex"
+          >
+            <div class="opinion__img">
+              <img
+                src="https://picsum.photos/100/100?random=1"
+                alt="product picture"
+              >
+            </div>
+            <div class="opinion__content flex-col flex-center-start">
+              <div class="opinion__info flex-start-center">
+                <div class="opinion__avatar">
+                  <img
+                    src="https://i.pravatar.cc/40"
+                    alt="user avatar"
+                  >
+                </div>
+                <div class="opinion__infoContent flex-col flex-center-stretch">
+                  <p class="opinion__userName">王六角</p>
+                  <p class="opinion__prodName">Louvre 雙人床架</p>
+                </div>
+              </div>
+              <p class="opinion__message">非常舒適，有需要會再回購。非常舒適，有需要會再回購。非常舒適，有需要會再回購。</p>
+            </div>
+          </a>
+        </li>
+        <li class="opinion__item">
+          <a
+            href="javascript:;"
+            class="opinion__link flex"
+          >
+            <div class="opinion__img">
+              <img
+                src="https://picsum.photos/100/100?random=1"
+                alt="product picture"
+              >
+            </div>
+            <div class="opinion__content flex-col flex-center-start">
+              <div class="opinion__info flex-start-center">
+                <div class="opinion__avatar">
+                  <img
+                    src="https://i.pravatar.cc/40"
+                    alt="user avatar"
+                  >
+                </div>
+                <div class="opinion__infoContent flex-col flex-center-stretch">
+                  <p class="opinion__userName">王六角</p>
+                  <p class="opinion__prodName">Louvre 雙人床架</p>
+                </div>
+              </div>
+              <p class="opinion__message">非常舒適，有需要會再回購。。</p>
+            </div>
+          </a>
+        </li>
+        <li class="opinion__item">
+          <a
+            href="javascript:;"
+            class="opinion__link flex"
+          >
+            <div class="opinion__img">
+              <img
+                src="https://picsum.photos/100/100?random=1"
+                alt="product picture"
+              >
+            </div>
+            <div class="opinion__content flex-col flex-center-start">
+              <div class="opinion__info flex-start-center">
+                <div class="opinion__avatar">
+                  <img
+                    src="https://i.pravatar.cc/40"
+                    alt="user avatar"
+                  >
+                </div>
+                <div class="opinion__infoContent flex-col flex-center-stretch">
+                  <p class="opinion__userName">王六角</p>
+                  <p class="opinion__prodName">Louvre 雙人床架</p>
+                </div>
+              </div>
+              <p class="opinion__message">非常舒適，有需要會再回購。。</p>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="products">
+    <div class="container">
+      <div class="convey">
+        <h2 class="convey__title contentTitle">運送方式</h2>
+        <ul class="convey__list">
+          <li class="convey__item">
+            <div class="convey__img">
+              <img
+                src=""
+                alt="convey process image"
+              >
+            </div>
+            <div class="convey__text">
+              <p class="convey__step">STEP.1</p>
+              <p class="convey__illustrate">選購商品</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="prods">
+
+      </div>
+    </div>
+  </div>
+  <!-- <div class="cart"></div> -->
+  <!-- <div class="order"></div> -->
+
 </body>
 
 </html>

@@ -1,0 +1,60 @@
+.banner
+  position: relative
+  z-index: -1
+  +mobile
+    &:before
+      content: ''
+      position: absolute
+      left: 0
+      top: 0
+      width: 100%
+      height: 100%
+      background-color: rgba(0,0,0,.38)
+    &__img
+      > img
+        width: 100%
+        height: \max(25vw, 255px)
+  &__text
+    width: 100%
+    color: #fff
+    +font(4)
+    line-height: 1.5
+    letter-spacing: .1rem
+    position: absolute
+    left: 0
+    bottom: 0
+    padding: 48px 52px
+    +mobile
+      +font(2)
+      text-align: center
+      left: 50%
+      top: 50%
+      bottom: auto
+      transform: translate(-50%, -50%)
+      padding: 0
+
+.header
+  &__content
+    padding: 60px 0
+  &__title
+    margin-bottom: 28px
+  &__list
+    +mobile
+      padding: 0 16px
+      flex-direction: column
+      align-items: center
+  &__item
+    margin-bottom: 24px
+    width: 31.3333%
+    +mobile
+      width: 100%
+  &__item-img
+    margin-bottom: 8px
+    > img
+      width: 100%
+      height: \max(33vw, 175px)
+      object-fit: cover
+  &__item-text
+    +font(1)
+    line-height: 1.2
+    text-align: center
