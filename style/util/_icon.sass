@@ -1,16 +1,16 @@
-@each $theme in $icon-theme
-  .theme__btn-icon--#{$theme}
-    background-color: map-get($icon-bgColor, $theme)
+// @each $theme in $icon-theme
+//   .theme__btn-icon--#{$theme}
+//     background-color: map-get($icon-bgColor, $theme)
 
-@each $name in $icon-name
-  .icon-#{$name}
-    +backgroundImg(map-get($icon-url, $name))
-    width: 20px
-    min-width: 20px
-    height: 20px
-    min-height: 20px
-    background-position: center
-    background-size: 20px 20px
+// @each $name in $icon-name
+//   .icon-#{$name}
+//     +backgroundImg(map-get($icon-url, $name))
+//     width: 20px
+//     min-width: 20px
+//     height: 20px
+//     min-height: 20px
+//     background-position: center
+//     background-size: 20px 20px
 
-.icon-mr4
-  margin-right: 4px
+// .icon-mr4
+//   margin-right: 4px
