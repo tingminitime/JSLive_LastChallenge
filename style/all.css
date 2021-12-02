@@ -685,7 +685,7 @@ i {
 
 .header__item-img > img {
   width: 100%;
-  height: \max(33vw, 175px);
+  height: \min(33vw, 175px);
   -o-object-fit: cover;
      object-fit: cover;
 }
