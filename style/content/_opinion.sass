@@ -15,9 +15,13 @@
     margin: 0 1% 20px 1%
     border-radius: 8px
     overflow: hidden
+    transition: all .2s
     +shadow
     +mobile
       width: 100%
+    &:hover
+      transform: translate(-3px, -3px)
+      +shadow(3, 17, 16, 8, $shadow)
   &__link
     background-color: #fff
   &__img

@@ -1,0 +1,46 @@
+.order
+  padding: 60px 0 90px 0
+  &__title
+    margin-bottom: 32px
+  &__form
+    margin: 0 auto
+    width: \min(50%, 350px)
+  &__label
+    display: block
+    & + .order__label
+      margin-top: 20px
+  &__payment
+    margin-bottom: 48px
+  &__inputTitle
+    line-height: 1.5
+    margin-bottom: 8px
+  &__inputArea
+    position: relative
+  &__input, &__select
+    width: 100%
+  &__input
+    width: 100%
+    padding: 8px 12px
+    border: 1px solid $lineGray
+    border-radius: 4px
+    +font(0)
+    &::placeholder
+      color: $textGray
+  &__required
+    position: absolute
+    top: 50%
+    right: -10px
+    transform: translate(100%, -50%)
+  &__send
+    padding: 10px 0
+    display: block
+    margin: 0 auto
+    width: 75%
+    +font(1)
+    color: #fff
+    background-color: #000
+    border: none
+    border-radius: 4px
+    transition: all .2s
+    &:hover
+      background-color: $darkBlue

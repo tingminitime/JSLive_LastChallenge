@@ -1,2 +1,117 @@
 .products
   padding: 32px 0 60px 0
+
+.convey
+  margin-bottom: 72px
+  &__title
+    margin-bottom: 32px
+  &__list
+    width: \min(100%, 730px)
+    margin: 0 auto
+    +mobile
+      flex-direction: column
+  &__item:not(:last-child)
+    .convey__img:before
+      content: 'arrow_right'
+      font-family: 'Material Icons'
+      +font(6)
+      position: absolute
+      right: -25px
+      top: 50%
+      transform: translate(100%, -50%)
+  &__img
+    margin-bottom: 8px
+    width: 115px
+    height: 115px
+    outline: 3px solid #000
+    border-radius: 50%
+    position: relative
+    +mobile
+      display: none
+    > img
+      width: 50px
+      height: 50px
+  &__text
+    text-align: center
+    line-height: 1.5
+  &__mobile-icon
+    margin: 8px 0
+
+.prods
+  &__filter
+    margin-bottom: 32px
+    +mobile
+      display: flex
+      justify-content: flex-end
+  &__select
+    width: 22%
+    +mobile
+      width: 48%
+      margin-right: 2%
+  &__list
+    +mobile
+      justify-content: center
+  &__item
+    width: 22%
+    margin-bottom: 28px
+    +shadow
+    +mobile
+      width: 46%
+      margin: 0 2% 20px 2%
+    &:not(:nth-child(4n))
+      +desk
+        margin-right: 3%
+    &:hover
+      img
+        transform: scale(1.1)
+  &__img
+    position: relative
+    display: block
+    width: 100%
+    z-index: 2
+  &__imgWrap
+    overflow: hidden
+    height: \min(30vw, 300px)
+    > img
+      width: 100%
+      height: 100%
+      object-fit: cover
+      transition: all .2s
+  &__newTag, &__addCart, &__title, &__origPrice
+    +font(1)
+    +mobile
+      +font(0)
+  &__newTag
+    position: absolute
+    z-index: 2
+    top: 12px
+    right: -4px
+    color: #fff
+    background-color: #000
+    padding: 8px 24px
+  &__addCart
+    display: block
+    padding: 12px 0
+    text-align: center
+    line-height: 1.2
+    letter-spacing: .05rem
+    color: #fff
+    background-color: #000
+    transition: all .2s
+    &:hover
+      background-color: $darkBlue
+  &__info
+    padding: 8px
+    line-height: 1.2
+  &__title
+    padding: 8px 0
+    +wordsEllipsis(2)
+    +mobile
+      padding: 4px 0
+  &__origPrice
+    color: $textGray
+    text-decoration: line-through
+  &__onsalePrice
+    +font(3)
+    +mobile
+      +font(2)

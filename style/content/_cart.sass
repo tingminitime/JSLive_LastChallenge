@@ -1,0 +1,95 @@
+.cart
+  padding: 48px 0 60px 0
+  background-color: $bgGray
+  &__wrap
+    padding: 0 10vw
+    +mobile
+      padding: 0 4vw
+  &__title
+    margin-bottom: 32px
+  &__listTitleSection
+    > div:first-child
+      flex: 4
+    > div + div
+      flex: 2
+      margin-left: 1%
+  &__listTitle
+    +font(1)
+    line-height: 1.2
+
+  &__summary
+    +mobile
+      flex-direction: column
+  &__clearCart
+    padding: 10px 20px
+    +font(1, 700)
+    border: 1px solid #000
+    border-radius: 4px
+    transition: all .2s
+    +mobile
+      padding: 5px 10px
+      +font(0, 700)
+    &:hover
+      color: #fff
+      background-color: #000
+  &__total
+    width: \max(25vw, 25%)
+    +mobile
+      width: 100%
+      padding: 8px
+      margin-bottom: 20px
+  &__totalAmount
+    +font(3)
+    +mobile
+      +font(2)
+
+  &__list
+    margin-bottom: 20px
+  &__item
+    padding: 20px 0
+    border-bottom: 1px solid $lineGray
+    +mobile
+      flex-direction: column
+      align-items: flex-start
+      position: relative
+    > div:first-child
+      flex: 4
+    > div + div
+      flex: 2
+      margin-left: 1%
+  &__prodInfo
+    +mobile
+      margin-bottom: 8px
+  &__img
+    min-width: 80px
+    height: 80px
+    > img
+      width: 100%
+      height: 100%
+      object-fit: cover
+  &__prodPrice, &__prodCount, &__prodTotal
+    line-height: 1.2
+    +mobile
+      line-height: 1.5
+  &__prodName
+    padding: 0 8px
+    line-height: 1.5
+    +wordsEllipsis(2)
+  &__delete
+    padding: 12px
+    transition: all .1s
+    +mobile
+      padding: 8px
+      position: absolute
+      top: 50%
+      right: 0
+      transform: translateY(-50%)
+    > i
+      +font(2, 700)
+      +mobile
+        +font(3, 700)
+    &:hover
+      +desk
+        transform: scale(1.5)
+        > i
+          color: $lightBlue
