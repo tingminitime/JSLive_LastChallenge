@@ -67,7 +67,6 @@ button {
 *, *:before, *:after {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  outline: 1px solid rgba(255, 0, 0, 0.25);
 }
 
 body {
@@ -434,6 +433,14 @@ i {
   .d-d-n {
     display: none;
   }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align-last: left;
 }
 
 /* ------ Text color ------ */
@@ -1357,7 +1364,7 @@ i {
   margin-bottom: 8px;
 }
 
-.order__inputArea {
+.order__inputArea, .order__selectArea {
   position: relative;
 }
 
@@ -1394,6 +1401,7 @@ i {
   position: absolute;
   top: 50%;
   right: -10px;
+  color: #C72424;
   -webkit-transform: translate(100%, -50%);
           transform: translate(100%, -50%);
 }

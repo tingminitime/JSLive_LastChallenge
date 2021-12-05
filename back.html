@@ -11,7 +11,20 @@
     name="viewport"
     content="width=device-width, initial-scale=1.0"
   >
-  <title>WOWOROOM 管理者後台</title>
+  <title>WOWOROOM | 管理者後台</title>
+  <!-- Material Icons -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Icons"
+    rel="stylesheet"
+  >
+  <!-- Swiper css -->
+  <link
+    rel='stylesheet'
+    href='https://cdnjs.cloudflare.com/ajax/libs/Swiper/7.3.1/swiper-bundle.min.css'
+    integrity='sha512-X6rkdr0JIxgdnOUEfnJENeCydCat1urriiDqzgUl92f9NSlnkSTWtlgiH8nxhxkK6nlZ3DxWf7cerVLvbo5NSg=='
+    crossorigin='anonymous'
+  />
+  <!-- c3 css -->
   <link
     rel='stylesheet'
     href='https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.css'
@@ -66,64 +79,95 @@
           <a
             href="javascript:;"
             class="menu-mobile__link"
-          >床墊優勢</a>
-        </li>
-        <li class="menu-mobile__item">
-          <a
-            href="javascript:;"
-            class="menu-mobile__link"
-          >好評推薦</a>
-        </li>
-        <li class="menu-mobile__item">
-          <a
-            href="javascript:;"
-            class="menu-mobile__link"
-          >運送方式</a>
+          >後台管理</a>
         </li>
         <li class="menu-mobile__item">
           <a
             href="javascript:;"
             class="menu-mobile__link highlight"
-          >立即預訂</a>
+          >管理員登入</a>
         </li>
       </ul>
     </div>
   </nav>
   <div class="topbar__separateLine"></div>
   <div class="container">
-    <h2 class="contentTitle">全產品類別營收比重</h2>
-    <div class="C3_chart"></div>
+    <!-- Slider main container -->
+    <div class="swiper swiper-chart">
+      <!-- Additional required wrapper -->
+      <div class="swiper-wrapper">
+        <!-- Slides -->
+        <div class="swiper-slide">
+          <h2 class="order__title contentTitle">全產品類別營收比重</h2>
+          <div class="C3_chart__sort"></div>
+        </div>
+        <div class="swiper-slide">
+          <h2 class="order__title contentTitle">全品項營收比重</h2>
+          <div class="C3_chart__allProds"></div>
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
     <div class="order">
       <button class="order__clearAll">清除全部訂單</button>
       <table class="order__table">
         <thead>
           <tr>
-            <th>訂單編號</th>
-            <th>聯絡人</th>
-            <th>聯絡地址</th>
-            <th>電子郵件</th>
-            <th>訂單品項</th>
-            <th>訂單日期</th>
-            <th>訂單狀態</th>
-            <th>操作</th>
+            <th scope="col">訂單編號</th>
+            <th scope="col">聯絡人</th>
+            <th scope="col">聯絡地址</th>
+            <th scope="col">電子郵件</th>
+            <th scope="col">訂單品項</th>
+            <th scope="col">訂單日期</th>
+            <th scope="col">訂單狀態</th>
+            <th scope="col">操作</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>10088377474</td>
+            <td class="order__sn">10088377474</td>
             <td>
-              <p>小杰</p>
-              <p>0912345678</p>
+              <p class="order__clientName">小杰</p>
+              <p class="order__clientPhone">0912345678</p>
             </td>
-            <td>高雄市前鎮區六合路183巷66號</td>
-            <td>cccexample@gmail.com</td>
-            <td>Louvre 雙人床架</td>
-            <td>2021/03/08</td>
-            <td>
-              <a href="javascript">未處理</a>
+            <td class="order__shippingAddress">高雄市前鎮區六合路183巷66號</td>
+            <td class="order__clientMail">
+              <a href="mailto:cccexample@gmail.com">cccexample@gmail.com</a>
             </td>
+            <td class="order__prod">Louvre 雙人床架</td>
+            <td class="order__date text-center">2021/03/08</td>
+            <td class="text-center">
+              <a
+                class="order__status"
+                href="javascript"
+              >未處理</a>
+            </td>
+            <td class="text-center">
+              <button class="order__delete">刪除</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="order__sn">10088377474</td>
             <td>
-              <button>刪除</button>
+              <p class="order__clientName">小杰</p>
+              <p class="order__clientPhone">0912345678</p>
+            </td>
+            <td class="order__shippingAddress">高雄市前鎮區六合路183巷66號</td>
+            <td class="order__clientMail">
+              <a href="mailto:cccexample@gmail.com">cccexample@gmail.com</a>
+            </td>
+            <td class="order__prod">Louvre 雙人床架</td>
+            <td class="order__date text-center">2021/03/08</td>
+            <td class="text-center">
+              <a
+                class="order__status order__status-done"
+                href="javascript"
+              >已處理</a>
+            </td>
+            <td class="text-center">
+              <button class="order__delete">刪除</button>
             </td>
           </tr>
         </tbody>
@@ -131,6 +175,11 @@
     </div>
   </div>
 
+  <script
+    src='https://cdnjs.cloudflare.com/ajax/libs/Swiper/7.3.1/swiper-bundle.min.js'
+    integrity='sha512-v+pIzqEVf0+O50Ls9scw6DDZT5On6G5wnXLLMSjYlfJJrNe+ZCWK849PBUYQDagZKc2125WKYJY3XugLNwwPfA=='
+    crossorigin='anonymous'
+  ></script>
   <script
     src='https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.7/d3.min.js'
     integrity='sha512-pvyDOCsMWEqixJpLPypiZkpjuIywuxhZImCDncJ8AWOzt9IWPv5GDEAVEqp2zhPmpbUEoQ756B3kEV30+V04OA=='
@@ -141,6 +190,9 @@
     integrity='sha512-+IpCthlNahOuERYUSnKFjzjdKXIbJ/7Dd6xvUp+7bEw0Jp2dg6tluyxLs+zq9BMzZgrLv8886T4cBSqnKiVgUw=='
     crossorigin='anonymous'
   ></script>
+  <script src="src/back/back.js"></script>
+  <script src="src/back/chart.js"></script>
+  <script src="src/back/back.js"></script>
 
 </body>
 

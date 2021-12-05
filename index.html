@@ -799,9 +799,9 @@
               type="text"
               class="order__input"
               placeholder="請輸入姓名"
-              name="姓名"
+              name="name"
             >
-            <span class="order__required">必填！</span>
+            <!-- <span class="order__required">必填！</span> -->
           </div>
         </label>
         <label class="order__label order__phone">
@@ -811,21 +811,23 @@
               type="text"
               class="order__input"
               placeholder="請輸入電話"
-              name="電話"
+              name="phone"
+              value="073470034"
             >
-            <span class="order__required">必填！</span>
+            <!-- <span class="order__required">必填！</span> -->
           </div>
         </label>
         <label class="order__label order__mail">
           <div class="order__inputTitle">Email</div>
           <div class="order__inputArea">
             <input
-              type="text"
+              type="email"
               class="order__input"
               placeholder="請輸入 Email"
-              name="Email"
+              name="email"
+              value="nicklas@foo.faketld"
             >
-            <span class="order__required">必填！</span>
+            <!-- <span class="order__required">必填！</span> -->
           </div>
         </label>
         <label class="order__label order__address">
@@ -835,18 +837,22 @@
               type="text"
               class="order__input"
               placeholder="請輸入寄送地址"
-              name="寄送地址"
+              name="address"
             >
-            <span class="order__required">必填！</span>
+            <!-- <span class="order__required">必填！</span> -->
           </div>
         </label>
         <label class="order__label order__payment">
           <div class="order__inputTitle">交易方式</div>
           <div class="order__selectArea">
             <select
-              name="商品篩選"
+              name="payment"
               class="order__select select"
             >
+              <option
+                value=""
+                selected
+              ></option>
               <option
                 value="ATM"
                 selected
@@ -864,6 +870,16 @@
       </form>
     </div>
   </div>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
+  <script
+    type="module"
+    src="src/front/form.js"
+  ></script>
+  <script
+    type="module"
+    src="src/front/front.js"
+  ></script>
 
 </body>
 
