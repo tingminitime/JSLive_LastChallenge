@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta
+    http-equiv="X-UA-Compatible"
+    content="IE=edge"
+  >
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+  <title>WOWOROOM 管理者後台</title>
+  <link
+    rel='stylesheet'
+    href='https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.css'
+    integrity='sha512-cznfNokevSG7QPA5dZepud8taylLdvgr0lDqw/FEZIhluFsSwyvS81CMnRdrNSKwbsmc43LtRd2/WMQV+Z85AQ=='
+    crossorigin='anonymous'
+  />
+  <link
+    rel="stylesheet"
+    href="style/back.css"
+  >
+</head>
+
+<body>
+  <div class="mask"></div>
+  <nav class="topbar container flex-sb-center">
+    <a
+      href="javascript:;"
+      class="logo flex-center"
+    >
+      <img
+        src="img/logo.svg"
+        alt="woworoom logo"
+      >
+    </a>
+    <ul class="menu flex">
+      <li class="menu__item">
+        <a
+          href="javascript:;"
+          class="menu__link"
+        >後台管理</a>
+      </li>
+      <li class="menu__item">
+        <a
+          href="javascript:;"
+          class="menu__link highlight"
+        >管理員登入</a>
+      </li>
+    </ul>
+    <button class="menu__btn">
+      <i class="material-icons">
+        menu
+      </i>
+    </button>
+    <div class="menu-mobile">
+      <button class="menu-mobile__toggle">
+        <i class="material-icons">
+          chevron_left
+        </i>
+      </button>
+      <ul class="menu-mobile__list">
+        <li class="menu-mobile__item">
+          <a
+            href="javascript:;"
+            class="menu-mobile__link"
+          >床墊優勢</a>
+        </li>
+        <li class="menu-mobile__item">
+          <a
+            href="javascript:;"
+            class="menu-mobile__link"
+          >好評推薦</a>
+        </li>
+        <li class="menu-mobile__item">
+          <a
+            href="javascript:;"
+            class="menu-mobile__link"
+          >運送方式</a>
+        </li>
+        <li class="menu-mobile__item">
+          <a
+            href="javascript:;"
+            class="menu-mobile__link highlight"
+          >立即預訂</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="topbar__separateLine"></div>
+  <div class="container">
+    <h2 class="contentTitle">全產品類別營收比重</h2>
+    <div class="C3_chart"></div>
+    <div class="order">
+      <button class="order__clearAll">清除全部訂單</button>
+      <table class="order__table">
+        <thead>
+          <tr>
+            <th>訂單編號</th>
+            <th>聯絡人</th>
+            <th>聯絡地址</th>
+            <th>電子郵件</th>
+            <th>訂單品項</th>
+            <th>訂單日期</th>
+            <th>訂單狀態</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>10088377474</td>
+            <td>
+              <p>小杰</p>
+              <p>0912345678</p>
+            </td>
+            <td>高雄市前鎮區六合路183巷66號</td>
+            <td>cccexample@gmail.com</td>
+            <td>Louvre 雙人床架</td>
+            <td>2021/03/08</td>
+            <td>
+              <a href="javascript">未處理</a>
+            </td>
+            <td>
+              <button>刪除</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script
+    src='https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.7/d3.min.js'
+    integrity='sha512-pvyDOCsMWEqixJpLPypiZkpjuIywuxhZImCDncJ8AWOzt9IWPv5GDEAVEqp2zhPmpbUEoQ756B3kEV30+V04OA=='
+    crossorigin='anonymous'
+  ></script>
+  <script
+    src='https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.js'
+    integrity='sha512-+IpCthlNahOuERYUSnKFjzjdKXIbJ/7Dd6xvUp+7bEw0Jp2dg6tluyxLs+zq9BMzZgrLv8886T4cBSqnKiVgUw=='
+    crossorigin='anonymous'
+  ></script>
+
+</body>
+
+</html>
