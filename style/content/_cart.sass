@@ -75,6 +75,17 @@
     padding: 0 8px
     line-height: 1.5
     +wordsEllipsis(2)
+  &__prodCount
+    .cart__count
+      padding: 0 4px
+    button
+      padding: 4px
+      &:hover
+        i.material-icons
+          color: $lightBlue
+    button i.material-icons
+      +font(1, 700)
+      color: $textGray
   &__delete
     padding: 12px
     transition: all .1s
