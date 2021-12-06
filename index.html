@@ -801,7 +801,6 @@
               placeholder="請輸入姓名"
               name="name"
             >
-            <!-- <span class="order__required">必填！</span> -->
           </div>
         </label>
         <label class="order__label order__phone">
@@ -812,9 +811,7 @@
               class="order__input"
               placeholder="請輸入電話"
               name="phone"
-              value="073470034"
             >
-            <!-- <span class="order__required">必填！</span> -->
           </div>
         </label>
         <label class="order__label order__mail">
@@ -825,9 +822,7 @@
               class="order__input"
               placeholder="請輸入 Email"
               name="email"
-              value="nicklas@foo.faketld"
             >
-            <!-- <span class="order__required">必填！</span> -->
           </div>
         </label>
         <label class="order__label order__address">
@@ -839,7 +834,6 @@
               placeholder="請輸入寄送地址"
               name="address"
             >
-            <!-- <span class="order__required">必填！</span> -->
           </div>
         </label>
         <label class="order__label order__payment">
@@ -853,10 +847,7 @@
                 value=""
                 selected
               ></option>
-              <option
-                value="ATM"
-                selected
-              >ATM</option>
+              <option value="ATM">ATM</option>
               <option value="超商付款">超商付款</option>
               <option value="信用卡">信用卡</option>
             </select>
@@ -871,6 +862,11 @@
     </div>
   </div>
 
+  <script
+    src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js'
+    integrity='sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw=='
+    crossorigin='anonymous'
+  ></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
   <script
     type="module"
@@ -878,7 +874,7 @@
   ></script>
   <script
     type="module"
-    src="src/front/front.js"
+    src="src/front/products.js"
   ></script>
 
 </body>

@@ -2,14 +2,8 @@
 /* ------ Color ------ */
 /* ------ shadow ------ */
 /* ------ Font ------ */
-/* ------ Banner ------ */
-/* ------ Checkbox ------ */
 /* ------ twicon ------ */
 /* ------ Select icon ------ */
-/* ------ Input icon ------ */
-/* ------ toggle icon ------ */
-/* ------ Share icon ------ */
-/* ------ Other icon ------ */
 /* http://meyerweb.com/eric/tools/css/reset/
  * v2.0 | 20110126
  * License: none (public domain) */
@@ -624,6 +618,10 @@ i {
 
 .swiper {
   height: 450px;
+  margin-bottom: 60px;
+}
+
+.order {
   margin-bottom: 60px;
 }
 

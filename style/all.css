@@ -2,14 +2,8 @@
 /* ------ Color ------ */
 /* ------ shadow ------ */
 /* ------ Font ------ */
-/* ------ Banner ------ */
-/* ------ Checkbox ------ */
 /* ------ twicon ------ */
 /* ------ Select icon ------ */
-/* ------ Input icon ------ */
-/* ------ toggle icon ------ */
-/* ------ Share icon ------ */
-/* ------ Other icon ------ */
 /* http://meyerweb.com/eric/tools/css/reset/
  * v2.0 | 20110126
  * License: none (public domain) */
@@ -1370,6 +1364,14 @@ i {
 
 .order__input, .order__select {
   width: 100%;
+}
+
+.order__input.success, .order__select.success {
+  border: 2px solid #3c763d;
+}
+
+.order__input.error, .order__select.error {
+  border: 2px solid #C72424;
 }
 
 .order__input {
