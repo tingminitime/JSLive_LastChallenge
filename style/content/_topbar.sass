@@ -82,19 +82,21 @@
   background-color: #fff
   +shadow
   transform: translateX(-100%)
+  transition: all .2s
   +mobile
     display: flex
   &.active
     transform: translateX(0%)
   &__toggle
     margin-bottom: 24px
-    padding-left: 24px
+    padding: 0 12px 0 24px
     > i
       +font(5)
   &__list
     align-self: stretch
   &__item
     width: 100%
+    border-bottom: 1px solid $lineGray
   &__link
     width: 100%
     +font(1)
