@@ -1,6 +1,7 @@
 // ----- Module -----
 import { swal } from '../vendor/swal.js'
 import { CLI_apiRequest, ADMIN_apiRequest } from '../api.js'
+import { API_getProducts } from '../products.js'
 import { C3_sortIncRender, C3_allProdsIncRender } from './chart.js'
 
 // ----- DOM -----
@@ -9,6 +10,7 @@ const clearOrdersBtn = document.querySelector('.order__clearAll')
 
 // ----- Variable -----
 let ordersData = []
+let prodsData = []
 let categories = ['床架', '窗簾', '收納']
 
 // ----- 初始化 -----
@@ -29,8 +31,15 @@ function C3_sortIncTask(data) {
     ary.push([sort, sortIncAcc])
     return ary
   }, [])
-  console.log('C3_data: ', C3_data)
+  console.log('C3_sortInc: ', C3_data)
 
+  return {
+    data: C3_data,
+    colors: C3_sortIncColors(categories)
+  }
+}
+
+function C3_sortIncColors(categories) {
   let colorsObj = {}
   categories.forEach(item => {
     switch (item) {
@@ -48,16 +57,36 @@ function C3_sortIncTask(data) {
     }
   })
   console.log(colorsObj)
-
-  return {
-    data: C3_data,
-    colors: colorsObj
-  }
+  return colorsObj
 }
 
 // C3 - 全品項營收比重
-function C3_allProdsIncTask() {
-
+async function C3_prodsIncTask(data) {
+  try {
+    prodsData = await API_getProducts()
+    console.log('prodsData: ', prodsData)
+    const products = prodsData.map(item => item['title'])
+    console.log(products)
+    const C3_data = products.reduce((ary, item) => {
+      const prodsIncAcc = data.reduce((accInc, order) => {
+        const orderProdsIncAcc = order['products'].reduce((acc, prod) => {
+          if (prod['title'] === item) {
+            acc += prod['price'] * prod['quantity']
+          }
+          return acc
+        }, 0)
+        return accInc + orderProdsIncAcc
+      }, 0)
+      ary.push([item, prodsIncAcc])
+      return ary
+    }, [])
+    console.log('C3_prodsInc: ', C3_data)
+    const C3_filterData = C3_data.filter(item => item[1] !== 0)
+    return C3_filterData
+  }
+  catch (err) {
+    throw err
+  }
 }
 
 // 訂單品項文字處理
@@ -92,33 +121,39 @@ function orderStatus(status, id) {
 }
 
 // 渲染訂單列表
-function RENDER_orders(data) {
-  const ordersHTML = data.reduce((html, item) => {
-    html += /* html */`
-    <tr>
-      <td class="order__sn">${item['createdAt']}</td>
-      <td>
-        <p class="order__clientName">${item['user']['name']}</p>
-        <p class="order__clientPhone">${item['user']['tel']}</p>
-      </td>
-      <td class="order__shippingAddress">${item['user']['address']}</td>
-      <td class="order__clientMail">
-        <a href="mailto:${item['user']['email']}">${item['user']['email']}</a>
-      </td>
-      <td class="order__prod">${orderProds(item['products'])}</td>
-      <td class="order__date text-center">${parseDate(item['createdAt'] * 1000)}</td>
-      <td class="text-center">
-        ${orderStatus(item['paid'], item['id'])}
-      </td>
-      <td class="text-center">
-        <button class="order__delete" data-id="${item['id']}">刪除</button>
-      </td>
-    </tr>
-    `
-    return html
-  }, ``)
-  orderList.innerHTML = ordersHTML
-  C3_sortIncRender(C3_sortIncTask(ordersData))
+async function RENDER_orders(data) {
+  try {
+    const ordersHTML = data.reduce((html, item) => {
+      html += /* html */`
+      <tr>
+        <td class="order__sn">${item['createdAt']}</td>
+        <td>
+          <p class="order__clientName">${item['user']['name']}</p>
+          <p class="order__clientPhone">${item['user']['tel']}</p>
+        </td>
+        <td class="order__shippingAddress">${item['user']['address']}</td>
+        <td class="order__clientMail">
+          <a href="mailto:${item['user']['email']}">${item['user']['email']}</a>
+        </td>
+        <td class="order__prod">${orderProds(item['products'])}</td>
+        <td class="order__date text-center">${parseDate(item['createdAt'] * 1000)}</td>
+        <td class="text-center">
+          ${orderStatus(item['paid'], item['id'])}
+        </td>
+        <td class="text-center">
+          <button class="order__delete" data-id="${item['id']}">刪除</button>
+        </td>
+      </tr>
+      `
+      return html
+    }, ``)
+    orderList.innerHTML = ordersHTML
+    C3_sortIncRender(C3_sortIncTask(ordersData))
+    C3_allProdsIncRender(await C3_prodsIncTask(ordersData))
+  }
+  catch (err) {
+    throw err
+  }
 }
 
 // API - 訂單列表 Task

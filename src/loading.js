@@ -18,7 +18,8 @@ export function loadingHandler(config) {
   if (user === 'customer') {
     if (method === 'get' && sort === 'products') {
       const prodsList = document.querySelector('.prods__list')
-      prodsList.innerHTML = blockLoadingTemplate
+      if (prodsList) prodsList.innerHTML = blockLoadingTemplate
+      else return
     }
     if (method === 'get' && sort === 'carts') {
       const cartList = document.querySelector('.cart__list')
