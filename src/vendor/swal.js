@@ -19,6 +19,24 @@ export const swal = () => {
     })
   }
 
+  // 確認通知
+  const confirm_alert = (confirmObj) => {
+    const { fn, arg, text } = confirmObj
+    Swal.fire({
+      title: text,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: '確認'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fn(arg)
+      }
+      else return
+    })
+  }
+
   // ----- 前台 -----
   // 送出訂單成功
   const success_sendOrder = () => {
@@ -51,27 +69,9 @@ export const swal = () => {
     })
   }
 
-  // 是否刪除購物車商品
-  const confirm_deleteCartProd = (confirmObj) => {
-    const { fn, arg, text } = confirmObj
-    Swal.fire({
-      title: text,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: '確認'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        fn(arg)
-      }
-      else return
-    })
-  }
-
   // ----- 後台 -----
   // 訂單狀態切換
-  const success_orderStatusChange = (id) => {
+  const success_orderToast = (title, id) => {
     const Toast = Swal.mixin({
       toast: true,
       position: 'top-end',
@@ -86,7 +86,7 @@ export const swal = () => {
 
     Toast.fire({
       icon: 'success',
-      title: '訂單狀態已更新',
+      title: title,
       text: `訂單編號: ${id}`
     })
   }
@@ -106,8 +106,8 @@ export const swal = () => {
     success_toast,
     success_sendOrder,
     error_orderError,
-    confirm_deleteCartProd,
-    success_orderStatusChange,
+    confirm_alert,
+    success_orderToast,
     success_clearOrders
   }
 }

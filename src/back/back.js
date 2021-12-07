@@ -1,6 +1,7 @@
 // ----- Module -----
 import { swal } from '../vendor/swal.js'
-import { ADMIN_apiRequest } from '../api.js'
+import { CLI_apiRequest, ADMIN_apiRequest } from '../api.js'
+import { C3_sortIncRender, C3_allProdsIncRender } from './chart.js'
 
 // ----- DOM -----
 const orderList = document.querySelector('.order__list')
@@ -8,14 +9,61 @@ const clearOrdersBtn = document.querySelector('.order__clearAll')
 
 // ----- Variable -----
 let ordersData = []
+let categories = ['床架', '窗簾', '收納']
 
 // ----- 初始化 -----
 renderOrdersTask()
 
+// C3 - 全類別營收比重
+function C3_sortIncTask(data) {
+  const C3_data = categories.reduce((ary, sort) => {
+    const sortIncAcc = data.reduce((accInc, order) => {
+      const orderSortIncAcc = order['products'].reduce((acc, prod) => {
+        if (prod['category'] === sort) {
+          acc += prod['price'] * prod['quantity']
+        }
+        return acc
+      }, 0)
+      return accInc + orderSortIncAcc
+    }, 0)
+    ary.push([sort, sortIncAcc])
+    return ary
+  }, [])
+  console.log('C3_data: ', C3_data)
+
+  let colorsObj = {}
+  categories.forEach(item => {
+    switch (item) {
+      case '窗簾':
+        colorsObj[item] = '#5434A7'
+        break
+      case '收納':
+        colorsObj[item] = '#9D7FEA'
+        break
+      case '床架':
+        colorsObj[item] = '#DACBFF'
+        break
+      default:
+        return
+    }
+  })
+  console.log(colorsObj)
+
+  return {
+    data: C3_data,
+    colors: colorsObj
+  }
+}
+
+// C3 - 全品項營收比重
+function C3_allProdsIncTask() {
+
+}
+
 // 訂單品項文字處理
 function orderProds(prods) {
   const text = prods.reduce((str, prod) => {
-    str += `${prod['title']} x ${prod['quantity']}`
+    str += `${prod['title']} x ${prod['quantity']}<br>`
     return str
   }, ``)
   return text
@@ -70,6 +118,7 @@ function RENDER_orders(data) {
     return html
   }, ``)
   orderList.innerHTML = ordersHTML
+  C3_sortIncRender(C3_sortIncTask(ordersData))
 }
 
 // API - 訂單列表 Task
@@ -98,7 +147,7 @@ function orderStatusChange(e) {
 async function orderStatusChangeTask(status, id) {
   try {
     const { PUT_orderStatusChange } = ADMIN_apiRequest()
-    const { success_orderStatusChange } = swal()
+    const { success_orderToast } = swal()
     const targetOrder = ordersData.find(item => item['id'] === id)
     const orderStatusChangeRes = await PUT_orderStatusChange({
       "data": {
@@ -108,7 +157,7 @@ async function orderStatusChangeTask(status, id) {
     })
     ordersData = orderStatusChangeRes.data.orders
     RENDER_orders(ordersData)
-    success_orderStatusChange(targetOrder['createdAt'])
+    success_orderToast('訂單狀態已更新', targetOrder['createdAt'])
   }
   catch (err) {
     throw err
@@ -118,7 +167,13 @@ async function orderStatusChangeTask(status, id) {
 // 刪除一筆訂單
 function orderDelete(e) {
   if (!e.target.classList.contains('order__delete')) return
+  const { confirm_alert } = swal()
   const id = e.target.dataset.id
+  confirm_alert({
+    fn: orderDeleteTask,
+    arg: id,
+    text: '確定刪除此筆訂單 ?'
+  })
 
 }
 
@@ -126,10 +181,12 @@ function orderDelete(e) {
 async function orderDeleteTask(id) {
   try {
     const { DELETE_order } = ADMIN_apiRequest()
-    const { success_clearOrders } = swal()
+    const { success_orderToast } = swal()
     const orderDeleteRes = await DELETE_order(id)
+    const targetOrder = ordersData.find(item => item['id'] === id)
     ordersData = orderDeleteRes.data.orders
-
+    RENDER_orders(ordersData)
+    success_orderToast('已刪除一筆訂單', targetOrder['createdAt'])
   }
   catch (err) {
     throw err
@@ -138,7 +195,22 @@ async function orderDeleteTask(id) {
 
 // 清空全部訂單
 function clearAllOrders(e) {
-
+  const { DELETE_allOrders } = ADMIN_apiRequest()
+  const { confirm_alert, success_clearOrders } = swal()
+  confirm_alert({
+    fn: async function () {
+      try {
+        const clearAllOrdersRes = await DELETE_allOrders()
+        ordersData = clearAllOrdersRes.data.orders
+        RENDER_orders(ordersData)
+        success_clearOrders()
+      }
+      catch (err) {
+        throw err
+      }
+    },
+    text: '是否清空所有訂單 ?'
+  })
 }
 
 // ----- Listener -----

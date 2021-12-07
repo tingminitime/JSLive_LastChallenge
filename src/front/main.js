@@ -1,6 +1,7 @@
 // ----- Module -----
 import { swal } from '../vendor/swal.js'
 import { CLI_apiRequest } from '../api.js'
+import { API_getProducts } from '../products.js'
 
 // ----- DOM -----
 const prodSelect = document.querySelector('.prods__select')
@@ -97,9 +98,7 @@ function RENDER_prods(data) {
 // API - 產品列表 Task
 async function prodsTask() {
   try {
-    const { GET_products } = CLI_apiRequest()
-    const prodsDataRes = await GET_products()
-    prodsData = prodsDataRes.data.products
+    prodsData = await API_getProducts()
     console.log('prodsData: ', prodsData)
     prodSelectFilter(prodsData)
     RENDER_prods(prodsData)
@@ -242,7 +241,7 @@ function updateCount(e) {
 async function updateCountTask(cartId, value) {
   try {
     const { PATCH_carts } = CLI_apiRequest()
-    const { confirm_deleteCartProd, success_toast } = swal()
+    const { confirm_alert, success_toast } = swal()
     const target = cartData.carts.find(item => item['id'] === cartId)
 
     let obj = {
@@ -254,7 +253,7 @@ async function updateCountTask(cartId, value) {
 
     // 數量等於 1 又減數量時
     if (obj['data']['quantity'] < 1) {
-      confirm_deleteCartProd({
+      confirm_alert({
         fn: deleteCartProdTask,
         arg: cartId,
         text: '確定移除此商品 ?'
@@ -276,11 +275,11 @@ async function updateCountTask(cartId, value) {
 
 // 刪除購物車產品
 function deleteCartProd(e) {
-  const { confirm_deleteCartProd } = swal()
+  const { confirm_alert } = swal()
 
   if (!e.target.closest('.cart__delete')) return
   const deleteBtn = e.target.closest('.cart__delete')
-  confirm_deleteCartProd({
+  confirm_alert({
     fn: deleteCartProdTask,
     arg: deleteBtn.dataset.id,
     text: '確定移除此商品 ?'
@@ -306,9 +305,8 @@ async function deleteCartProdTask(cartId) {
 
 // 清除購物車
 function clearCart(e) {
-  const { confirm_deleteCartProd } = swal()
-  confirm_deleteCartProd(clearCartTask)
-  confirm_deleteCartProd({
+  const { confirm_alert } = swal()
+  confirm_alert({
     fn: clearCartTask,
     text: '確定清空購物車 ?'
   })

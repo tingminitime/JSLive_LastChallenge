@@ -1114,7 +1114,7 @@ i {
 }
 
 .prods__info {
-  padding: 8px;
+  padding: 8px 12px 16px 12px;
   line-height: 1.2;
 }
 
@@ -1147,7 +1147,7 @@ i {
 
 @media (max-width: 767px) {
   .prods__onsalePrice {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: normal;
   }
 }
@@ -1491,4 +1491,16 @@ i {
 
 .order__send:hover {
   background-color: #301E5F;
+}
+
+.footer {
+  background-color: #000;
+  text-align: center;
+}
+
+.footer__backLink {
+  padding: 16px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
 }
