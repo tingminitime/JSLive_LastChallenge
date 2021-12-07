@@ -38,10 +38,6 @@ export function loadingHandler(config) {
       fixedLoading()
     }
   }
-  // 後台 Loading
-  else if (user === 'admin') {
-    return
-  }
 }
 
 export function blockLoading(user, sort) {

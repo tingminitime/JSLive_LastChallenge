@@ -111,7 +111,8 @@ import { cartData, cartTask } from './main.js'
     }
     else {
       // Swal
-      error_orderError()
+      const alertTitle = '<p style="margin-bottom:8px;">請檢查表單是否填寫正確</p><p>Σ(O_O)</p>'
+      error_orderError(alertTitle)
     }
   }
 
@@ -128,7 +129,9 @@ import { cartData, cartTask } from './main.js'
     try {
       // 判斷購物車有無東西
       if (cartData.carts.length === 0) {
-        alert('請先新增商品至購物車 !')
+        const { error_orderError } = swal()
+        const alertTitle = '<p style="margin-bottom:8px;">請先新增商品至購物車</p><p>Σ(O_O)</p>'
+        error_orderError(alertTitle)
         return
       }
       else {

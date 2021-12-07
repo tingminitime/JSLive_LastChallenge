@@ -14,6 +14,10 @@ const noImageUrl = 'img/noimage.png'
 let prodsData = []
 let cartData = {}
 
+// ----- 初始化 -----
+cartTask()
+prodsTask()
+
 // 商品篩選 Option 渲染
 function RENDER_prodSelect(data) {
   const selectBasicHTML = /* html */`
@@ -90,6 +94,21 @@ function RENDER_prods(data) {
   prodsList.innerHTML = prodsHTML
 }
 
+// API - 產品列表 Task
+async function prodsTask() {
+  try {
+    const { GET_products } = CLI_apiRequest()
+    const prodsDataRes = await GET_products()
+    prodsData = prodsDataRes.data.products
+    console.log('prodsData: ', prodsData)
+    prodSelectFilter(prodsData)
+    RENDER_prods(prodsData)
+  }
+  catch (err) {
+    throw err
+  }
+}
+
 // 購物車無產品
 function emptyCart() {
   const emptyCartHTML = /* html */`
@@ -160,21 +179,6 @@ function RENDER_cart(data) {
   cartTotalAmount.textContent = `${data.finalTotal.toLocaleString()}`
 }
 
-// API - 產品列表 Task
-async function prodsTask() {
-  try {
-    const { GET_products } = CLI_apiRequest()
-    const prodsDataRes = await GET_products()
-    prodsData = prodsDataRes.data.products
-    console.log('prodsData: ', prodsData)
-    prodSelectFilter(prodsData)
-    RENDER_prods(prodsData)
-  }
-  catch (err) {
-    throw err
-  }
-}
-
 // API - 購物車 Task
 async function cartTask() {
   try {
@@ -199,7 +203,7 @@ function addCart(e) {
 async function addCartTask(prodId) {
   try {
     const { POST_carts } = CLI_apiRequest()
-    const { success_addCart } = swal()
+    const { success_toast } = swal()
 
     let obj = {
       "data": {
@@ -219,7 +223,7 @@ async function addCartTask(prodId) {
     RENDER_cart(cartData)
     console.log('(新增至購物車成功)cartData: ', cartData)
     // Swal
-    success_addCart()
+    success_toast('已加入購物車')
   }
   catch (err) {
     throw err
@@ -237,8 +241,8 @@ function updateCount(e) {
 // API - 更新購物車產品數量 Task
 async function updateCountTask(cartId, value) {
   try {
-    console.log(cartId, value)
     const { PATCH_carts } = CLI_apiRequest()
+    const { confirm_deleteCartProd, success_toast } = swal()
     const target = cartData.carts.find(item => item['id'] === cartId)
 
     let obj = {
@@ -250,9 +254,11 @@ async function updateCountTask(cartId, value) {
 
     // 數量等於 1 又減數量時
     if (obj['data']['quantity'] < 1) {
-      const deleteConfirm = confirm('確定清除此產品 ?')
-      if (deleteConfirm) deleteCartProdTask(cartId)
-      else return
+      confirm_deleteCartProd({
+        fn: deleteCartProdTask,
+        arg: cartId,
+        text: '確定移除此商品 ?'
+      })
     }
     // 數量大於 1 減數量
     else if (obj['data']['quantity'] >= 1) {
@@ -260,6 +266,7 @@ async function updateCountTask(cartId, value) {
       cartData = updateCartDataRes.data
       RENDER_cart(cartData)
       console.log('(更新數量成功)cartData: ', cartData)
+      success_toast('更新數量成功')
     }
   }
   catch (err) {
@@ -269,25 +276,28 @@ async function updateCountTask(cartId, value) {
 
 // 刪除購物車產品
 function deleteCartProd(e) {
-  // cart__delete
+  const { confirm_deleteCartProd } = swal()
+
   if (!e.target.closest('.cart__delete')) return
   const deleteBtn = e.target.closest('.cart__delete')
-  const deleteConfirm = confirm('確定清除此產品 ?')
-  if (deleteConfirm) deleteCartProdTask(deleteBtn.dataset.id)
-  else return
+  confirm_deleteCartProd({
+    fn: deleteCartProdTask,
+    arg: deleteBtn.dataset.id,
+    text: '確定移除此商品 ?'
+  })
 }
 
 // API - 刪除購物車產品 Task
 async function deleteCartProdTask(cartId) {
   try {
     const { DELETE_cartsProd } = CLI_apiRequest()
-    const { success_deleteCartProd } = swal()
+    const { success_toast } = swal()
     const deleteCartProdRes = await DELETE_cartsProd(cartId)
     cartData = deleteCartProdRes.data
     RENDER_cart(cartData)
     console.log('(刪除購物車產品成功)cartData: ', cartData)
     // Swal
-    success_deleteCartProd()
+    success_toast('刪除成功')
   }
   catch (err) {
     throw err
@@ -296,31 +306,34 @@ async function deleteCartProdTask(cartId) {
 
 // 清除購物車
 function clearCart(e) {
-  const clearCartConfirm = confirm('確定清除購物車 ?')
-  if (clearCartConfirm) clearCartTask()
-  else return
+  const { confirm_deleteCartProd } = swal()
+  confirm_deleteCartProd(clearCartTask)
+  confirm_deleteCartProd({
+    fn: clearCartTask,
+    text: '確定清空購物車 ?'
+  })
+
+  // const clearCartConfirm = confirm('確定清除購物車 ?')
+  // if (clearCartConfirm) clearCartTask()
+  // else return
 }
 
 // API - 清除購物車 Task
 async function clearCartTask() {
   try {
     const { DELETE_cartsAllProd } = CLI_apiRequest()
-    const { success_clearCart } = swal()
+    const { success_toast } = swal()
     const clearCartRes = await DELETE_cartsAllProd()
     cartData = clearCartRes.data
     RENDER_cart(cartData)
     console.log('(清除購物車成功)cartData: ', cartData)
     // Swal
-    success_clearCart()
+    success_toast('購物車已清空')
   }
   catch (err) {
     throw err
   }
 }
-
-// ----- 初始化 -----
-cartTask()
-prodsTask()
 
 // ----- Listener -----
 prodsList.addEventListener('click', addCart, false)

@@ -1,4 +1,25 @@
 export const swal = () => {
+  // ----- 通用 -----
+  const success_toast = (title) => {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+
+    Toast.fire({
+      icon: 'success',
+      title: title,
+    })
+  }
+
+  // ----- 前台 -----
   // 送出訂單成功
   const success_sendOrder = () => {
     Swal.fire({
@@ -10,68 +31,8 @@ export const swal = () => {
     })
   }
 
-  // 加入購物車成功
-  const success_addCart = () => {
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 2000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
-
-    Toast.fire({
-      icon: 'success',
-      title: '已加入購物車'
-    })
-  }
-
-  // 刪除購物車商品成功
-  const success_deleteCartProd = () => {
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 2000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
-
-    Toast.fire({
-      icon: 'success',
-      title: '刪除成功'
-    })
-  }
-
-  // 清空購物車成功
-  const success_clearCart = () => {
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 2000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
-
-    Toast.fire({
-      icon: 'success',
-      title: '購物車已清空'
-    })
-  }
-
   // 表單驗證失敗
-  const error_orderError = () => {
+  const error_orderError = (html) => {
     const Toast = Swal.mixin({
       toast: true,
       position: 'top-end',
@@ -86,15 +47,67 @@ export const swal = () => {
 
     Toast.fire({
       icon: 'error',
-      title: '<p style="margin-bottom:8px;">請檢查表單是否填寫正確</p><p>Σ(O_O)</p>'
+      title: html
+    })
+  }
+
+  // 是否刪除購物車商品
+  const confirm_deleteCartProd = (confirmObj) => {
+    const { fn, arg, text } = confirmObj
+    Swal.fire({
+      title: text,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: '確認'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fn(arg)
+      }
+      else return
+    })
+  }
+
+  // ----- 後台 -----
+  // 訂單狀態切換
+  const success_orderStatusChange = (id) => {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+
+    Toast.fire({
+      icon: 'success',
+      title: '訂單狀態已更新',
+      text: `訂單編號: ${id}`
+    })
+  }
+
+  // 清除全部訂單成功
+  const success_clearOrders = () => {
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: '訂單已全部清空 (*・ω・)ﾉ',
+      showConfirmButton: false,
+      timer: 1500
     })
   }
 
   return {
+    success_toast,
     success_sendOrder,
-    success_addCart,
-    success_deleteCartProd,
-    success_clearCart,
-    error_orderError
+    error_orderError,
+    confirm_deleteCartProd,
+    success_orderStatusChange,
+    success_clearOrders
   }
 }

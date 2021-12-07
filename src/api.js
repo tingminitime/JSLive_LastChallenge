@@ -1,5 +1,5 @@
 // ----- Module -----
-import { loadingHandler, blockLoading, fixedLoading } from './loading.js'
+import { loadingHandler, fixedLoading } from './loading.js'
 
 // ----- API base -----
 const token = 'PXrRfppPR2Uht0dID8L1bdukHMa2'
@@ -48,13 +48,22 @@ export const CLI_apiRequest = () => {
 export const ADMIN_apiRequest = () => {
   // 取得訂單資料
   const GET_orders = () => apiRequestWithToken.get(`/admin/${path}/orders`)
+  // 訂單狀態切換
+  const PUT_orderStatusChange = data => apiRequestWithToken.put(`/admin/${path}/orders`, data)
+  // 清空訂單
+  const DELETE_allOrders = () => apiRequestWithToken.delete(`/admin/${path}/orders`)
+  // 刪除一筆訂單
+  const DELETE_order = id => apiRequestWithToken.delete(`/admin/${path}/orders/${id}`)
 
   return {
-    GET_orders
+    GET_orders,
+    PUT_orderStatusChange,
+    DELETE_allOrders,
+    DELETE_order
   }
 }
 
-// ----- Request 攔截器 -----
+// ----- apiRequest Request 攔截器 -----
 apiRequest.interceptors.request.use(
   (config) => {
     loadingHandler(config)
@@ -65,10 +74,32 @@ apiRequest.interceptors.request.use(
   }
 )
 
-// ----- Response 攔截器 -----
+// ----- apiRequest Response 攔截器 -----
 apiRequest.interceptors.response.use(
   (res) => {
     loadingHandler(res.config)
+    return res
+  },
+  (err) => {
+    return Promise.reject(err)
+  }
+)
+
+// ----- apiRequestWithToken Request 攔截器 -----
+apiRequestWithToken.interceptors.request.use(
+  (config) => {
+    fixedLoading()
+    return config
+  },
+  (err) => {
+    return Promise.reject(err)
+  }
+)
+
+// ----- apiRequestWithToken Response 攔截器 -----
+apiRequestWithToken.interceptors.response.use(
+  (res) => {
+    fixedLoading()
     return res
   },
   (err) => {

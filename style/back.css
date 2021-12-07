@@ -102,6 +102,29 @@ i {
   letter-spacing: .1rem;
 }
 
+.loading__item {
+  width: 100%;
+  padding: 24px 0;
+  height: 150px;
+}
+
+.loading__item img {
+  width: 96px;
+}
+
+.loading__fixed {
+  position: fixed;
+  z-index: 99;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.38);
+}
+
+.loading__fixed img {
+  width: 150px;
+  height: 150px;
+}
+
 /* ------ Container ------ */
 .container {
   max-width: 1150px;
