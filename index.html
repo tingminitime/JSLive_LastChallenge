@@ -470,8 +470,7 @@
               hidden
             >商品篩選</option>
             <option value="全部">全部</option>
-            <option value="第一">第一</option>
-            <option value="第二">第二</option>
+            <!-- 載入資料 -->
           </select>
         </div>
         <ul class="prods__list flex-wrap flex-start">
@@ -587,7 +586,7 @@
               type="text"
               class="order__input"
               placeholder="請輸入電話"
-              name="phone"
+              name="tel"
             >
           </div>
         </label>
@@ -639,11 +638,15 @@
     </div>
   </div>
 
+  <!-- sweet alert -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- axios -->
   <script
     src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js'
     integrity='sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw=='
     crossorigin='anonymous'
   ></script>
+  <!-- validate -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
   <script
     type="module"
@@ -655,7 +658,7 @@
   ></script>
   <script
     type="module"
-    src="src/front/products.js"
+    src="src/front/main.js"
   ></script>
 
 </body>

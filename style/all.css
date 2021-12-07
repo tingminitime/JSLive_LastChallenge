@@ -143,7 +143,8 @@ i {
 
 /* ------ Container ------ */
 .container {
-  max-width: 1110px;
+  max-width: 1150px;
+  padding: 0 20px;
   margin: 0 auto;
 }
 
@@ -1202,7 +1203,6 @@ i {
   padding: 10px 20px;
   font-size: 20px;
   font-weight: 700;
-  border: 1px solid #000;
   border-radius: 4px;
   -webkit-transition: all .2s;
   transition: all .2s;
@@ -1216,9 +1216,18 @@ i {
   }
 }
 
-.cart__clearCart:hover {
+.cart__clearCart:not([disabled]) {
+  border: 1px solid #000;
+}
+
+.cart__clearCart:not([disabled]):hover {
   color: #fff;
   background-color: #000;
+}
+
+.cart__clearCart[disabled] {
+  border: 1px solid #797979;
+  color: #797979;
 }
 
 .cart__total {
@@ -1374,6 +1383,15 @@ i {
   .cart__delete:hover > i {
     color: #6A33F8;
   }
+}
+
+.cart__emptyText {
+  padding: 36px 0;
+  font-size: 24px;
+  font-weight: 500;
+  color: #797979;
+  text-align: center;
+  letter-spacing: .1rem;
 }
 
 .order {

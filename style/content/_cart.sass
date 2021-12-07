@@ -23,15 +23,19 @@
   &__clearCart
     padding: 10px 20px
     +font(1, 700)
-    border: 1px solid #000
     border-radius: 4px
     transition: all .2s
     +mobile
       padding: 5px 10px
       +font(0, 700)
+  &__clearCart:not([disabled])
+    border: 1px solid #000
     &:hover
       color: #fff
       background-color: #000
+  &__clearCart[disabled]
+    border: 1px solid $textGray
+    color: $textGray
   &__total
     width: \max(25vw, 25%)
     +mobile
@@ -104,3 +108,9 @@
         transform: scale(1.5)
         > i
           color: $lightBlue
+  &__emptyText
+    padding: 36px 0
+    +font(2, 500)
+    color: $textGray
+    text-align: center
+    letter-spacing: .1rem

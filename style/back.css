@@ -104,7 +104,8 @@ i {
 
 /* ------ Container ------ */
 .container {
-  max-width: 1110px;
+  max-width: 1150px;
+  padding: 0 20px;
   margin: 0 auto;
 }
 
