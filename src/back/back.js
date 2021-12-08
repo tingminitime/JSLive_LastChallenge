@@ -39,7 +39,7 @@ function C3_sortIncTask(data) {
     ary.push([sort, sortIncAcc])
     return ary
   }, [])
-  console.log('C3_sortInc: ', C3_data)
+  // console.log('C3_sortInc: ', C3_data)
 
   return {
     data: C3_data,
@@ -65,7 +65,6 @@ function C3_sortIncColors(categories) {
         return
     }
   })
-  console.log(colorsObj)
   return colorsObj
 }
 
@@ -73,9 +72,7 @@ function C3_sortIncColors(categories) {
 async function C3_prodsIncTask(data) {
   try {
     prodsData = await API_getProducts()
-    console.log('prodsData: ', prodsData)
     const products = prodsData.map(item => item['title'])
-    console.log(products)
     const C3_data = products.reduce((ary, item) => {
       const prodsIncAcc = data.reduce((accInc, order) => {
         const orderProdsIncAcc = order['products'].reduce((acc, prod) => {
@@ -125,7 +122,7 @@ function C3_filterTopData(obj) {
   // 取出前 C3_topCount 筆資料
   const topData = sortData.slice(0, C3_topCount)
   topData.push(otherData)
-  console.log('C3_prodsInc: ', topData)
+  // console.log('C3_prodsInc: ', topData)
   return topData
 }
 
@@ -146,7 +143,7 @@ function C3_prodsIncColors(obj) {
       : obj[item] = colors[colorsTopProps[index]]
     return obj
   }, {})
-  console.log('C3_colorsObj: ', C3_colorsObj)
+  // console.log('C3_colorsObj: ', C3_colorsObj)
   return C3_colorsObj
 }
 
@@ -194,7 +191,7 @@ async function renderOrdersTask() {
     const { GET_orders } = ADMIN_apiRequest()
     const ordersDataRes = await GET_orders()
     ordersData = ordersDataRes.data.orders
-    console.log(ordersData)
+    console.log('ordersData: ', ordersData)
     RENDER_orders(ordersData)
   }
   catch (err) {
