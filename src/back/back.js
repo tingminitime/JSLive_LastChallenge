@@ -80,44 +80,32 @@ async function C3_prodsIncTask(data) {
       ary.push([item, prodsIncAcc])
       return ary
     }, [])
-    console.log('C3_prodsInc: ', C3_data)
-    const C3_filterData = C3_data.filter(item => item[1] !== 0)
-    return C3_filterData
+
+    return C3_filterData({
+      data: C3_data,
+      topCount: 4,
+      otherText: '其他'
+    })
   }
   catch (err) {
     throw err
   }
 }
 
-// 訂單品項文字處理
-function orderProds(prods) {
-  const text = prods.reduce((str, prod) => {
-    str += `${prod['title']} x ${prod['quantity']}<br>`
-    return str
-  }, ``)
-  return text
-}
-
-// 訂單日期處理
-function parseDate(timestamp) {
-  let orderDate = new Date(parseInt(timestamp))
-  const year = orderDate.getFullYear().toString()
-  const month = (orderDate.getMonth() + 1).toString()
-  const day = orderDate.getDate().toString()
-  return `${year}/${month}/${day}`
-}
-
-// 訂單狀態處理
-function orderStatus(status, id) {
-  let html = ``
-  status
-    ? html = `
-    <a class="order__status" href="javascript:;" data-status="0" data-id="${id}">未處理</a>
-    `
-    : html = `
-    <a class="order__status order__status-done" href="javascript:;" data-status="1" data-id="${id}">已處理</a>
-    `
-  return html
+// 取前幾名及其他資料
+function C3_filterData(obj) {
+  const { data, topCount, otherText } = obj
+  const filterData = data.filter(item => item[1] !== 0)
+  const sortData = filterData.sort((a, b) => b[1] - a[1])
+  const otherData = sortData.slice(4).reduce((ary, item) => {
+    let acc = 0
+    acc += item[1]
+    return [otherText, acc]
+  }, [])
+  const topData = sortData.slice(0, topCount)
+  topData.push(otherData)
+  console.log('C3_prodsInc: ', topData)
+  return topData
 }
 
 // 渲染訂單列表
@@ -148,7 +136,9 @@ async function RENDER_orders(data) {
       return html
     }, ``)
     orderList.innerHTML = ordersHTML
+    // 全產品類別營收比重
     C3_sortIncRender(C3_sortIncTask(ordersData))
+    // 全品項營收比重
     C3_allProdsIncRender(await C3_prodsIncTask(ordersData))
   }
   catch (err) {
@@ -176,6 +166,37 @@ function orderStatusChange(e) {
   let { status, id } = e.target.dataset
   status = Boolean(Number(e.target.dataset.status))
   orderStatusChangeTask(status, id)
+}
+
+// 訂單品項文字處理
+function orderProds(prods) {
+  const text = prods.reduce((str, prod) => {
+    str += `${prod['title']} x ${prod['quantity']}<br>`
+    return str
+  }, ``)
+  return text
+}
+
+// 訂單日期處理
+function parseDate(timestamp) {
+  let orderDate = new Date(parseInt(timestamp))
+  const year = orderDate.getFullYear().toString()
+  const month = (orderDate.getMonth() + 1).toString()
+  const day = orderDate.getDate().toString()
+  return `${year}/${month}/${day}`
+}
+
+// 訂單狀態處理產生 HTML
+function orderStatus(status, id) {
+  let html = ``
+  status
+    ? html = `
+    <a class="order__status" href="javascript:;" data-status="0" data-id="${id}">未處理</a>
+    `
+    : html = `
+    <a class="order__status order__status-done" href="javascript:;" data-status="1" data-id="${id}">已處理</a>
+    `
+  return html
 }
 
 // API - 訂單狀態切換 Task
