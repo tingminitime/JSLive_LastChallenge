@@ -12,6 +12,14 @@ const clearOrdersBtn = document.querySelector('.order__clearAll')
 let ordersData = []
 let prodsData = []
 let categories = ['床架', '窗簾', '收納']
+let colors = {
+  top1: '#5434A7',
+  top2: '#9D7FEA',
+  top3: '#DACBFF',
+  other: '#301E5F'
+}
+const C3_topCount = 3
+const C3_otherText = '其他'
 
 // ----- 初始化 -----
 renderOrdersTask()
@@ -39,6 +47,7 @@ function C3_sortIncTask(data) {
   }
 }
 
+// C3 - 產品類別顏色
 function C3_sortIncColors(categories) {
   let colorsObj = {}
   categories.forEach(item => {
@@ -81,31 +90,64 @@ async function C3_prodsIncTask(data) {
       return ary
     }, [])
 
-    return C3_filterData({
+    const C3_filterData = C3_filterTopData({
       data: C3_data,
-      topCount: 4,
-      otherText: '其他'
+      C3_topCount,
+      C3_otherText
     })
+
+    const C3_colorsData = C3_prodsIncColors({
+      data: C3_filterData,
+      C3_topCount,
+      C3_otherText
+    })
+
+    return { C3_filterData, C3_colorsData }
   }
   catch (err) {
     throw err
   }
 }
 
-// 取前幾名及其他資料
-function C3_filterData(obj) {
-  const { data, topCount, otherText } = obj
+// C3 - 全品項營收取前幾名及其他資料
+function C3_filterTopData(obj) {
+  const { data, C3_topCount, C3_otherText } = obj
+  // 去除收入為 0 的品項
   const filterData = data.filter(item => item[1] !== 0)
+  // 依照金額 大 → 小 排序
   const sortData = filterData.sort((a, b) => b[1] - a[1])
-  const otherData = sortData.slice(4).reduce((ary, item) => {
+  // 取出 C3_topCount 筆後的其他品項資料，並加總金額組合資料
+  const otherData = sortData.slice(C3_topCount).reduce((ary, item) => {
     let acc = 0
     acc += item[1]
-    return [otherText, acc]
+    return [C3_otherText, acc]
   }, [])
-  const topData = sortData.slice(0, topCount)
+  // 取出前 C3_topCount 筆資料
+  const topData = sortData.slice(0, C3_topCount)
   topData.push(otherData)
   console.log('C3_prodsInc: ', topData)
   return topData
+}
+
+// C3 - 全品項營收顏色處理
+function C3_prodsIncColors(obj) {
+  const { data, C3_topCount, C3_otherText } = obj
+  const C3_colorsProps = data.map(item => item[0])
+  // 取出顏色物件屬性陣列
+  const colorsProps = Object.keys(colors)
+  // 取出顏色物件屬性陣列前 C3_topCount // 3
+  const colorsTopProps = colorsProps.slice(0, C3_topCount)
+  // 取出顏色物件屬性陣列最後一個 // other
+  const colorsOtherProps = colorsProps.pop()
+  // 組合顏色物件
+  const C3_colorsObj = C3_colorsProps.reduce((obj, item, index) => {
+    item === C3_otherText || index >= colorsTopProps.length
+      ? obj[item] = colors[colorsOtherProps]
+      : obj[item] = colors[colorsTopProps[index]]
+    return obj
+  }, {})
+  console.log('C3_colorsObj: ', C3_colorsObj)
+  return C3_colorsObj
 }
 
 // 渲染訂單列表
