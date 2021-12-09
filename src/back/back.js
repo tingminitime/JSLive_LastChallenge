@@ -1,12 +1,13 @@
 // ----- Module -----
 import { swal } from '../vendor/swal.js'
-import { CLI_apiRequest, ADMIN_apiRequest } from '../api.js'
+import { ADMIN_apiRequest } from '../api.js'
 import { API_getProducts } from '../products.js'
 import { C3_sortIncRender, C3_allProdsIncRender } from './chart.js'
 
 // ----- DOM -----
 const orderList = document.querySelector('.order__list')
 const clearOrdersBtn = document.querySelector('.order__clearAll')
+const C3_topCountSelect = document.querySelector('.C3_filter__prodsIncTopCount')
 
 // ----- Variable -----
 let ordersData = []
@@ -18,8 +19,13 @@ let colors = {
   top3: '#DACBFF',
   other: '#301E5F'
 }
-const C3_topCount = 3
+let C3_prodsIncData = []
+let C3_prodsIncfilterData = []
+let C3_prodsIncTopData = []
+let C3_prodsColorsData = {}
+let C3_topCount = 3
 const C3_otherText = '其他'
+console.log('全品項前幾筆: ', C3_topCount)
 
 // ----- 初始化 -----
 renderOrdersTask()
@@ -73,7 +79,7 @@ async function C3_prodsIncTask(data) {
   try {
     prodsData = await API_getProducts()
     const products = prodsData.map(item => item['title'])
-    const C3_data = products.reduce((ary, item) => {
+    C3_prodsIncData = products.reduce((ary, item) => {
       const prodsIncAcc = data.reduce((accInc, order) => {
         const orderProdsIncAcc = order['products'].reduce((acc, prod) => {
           if (prod['title'] === item) {
@@ -87,19 +93,19 @@ async function C3_prodsIncTask(data) {
       return ary
     }, [])
 
-    const C3_filterData = C3_filterTopData({
-      data: C3_data,
+    C3_prodsIncTopData = C3_filterTopData({
+      data: C3_prodsIncData,
       C3_topCount,
       C3_otherText
     })
 
-    const C3_colorsData = C3_prodsIncColors({
-      data: C3_filterData,
+    C3_prodsColorsData = C3_prodsIncColors({
+      data: C3_prodsIncTopData,
       C3_topCount,
       C3_otherText
     })
 
-    return { C3_filterData, C3_colorsData }
+    return { C3_prodsIncTopData, C3_prodsColorsData }
   }
   catch (err) {
     throw err
@@ -110,9 +116,9 @@ async function C3_prodsIncTask(data) {
 function C3_filterTopData(obj) {
   const { data, C3_topCount, C3_otherText } = obj
   // 去除收入為 0 的品項
-  const filterData = data.filter(item => item[1] !== 0)
+  C3_prodsIncfilterData = data.filter(item => item[1] !== 0)
   // 依照金額 大 → 小 排序
-  const sortData = filterData.sort((a, b) => b[1] - a[1])
+  const sortData = C3_prodsIncfilterData.sort((a, b) => b[1] - a[1])
   // 取出 C3_topCount 筆後的其他品項資料，並加總金額組合資料
   const otherData = sortData.slice(C3_topCount).reduce((ary, item) => {
     let acc = 0
@@ -121,30 +127,65 @@ function C3_filterTopData(obj) {
   }, [])
   // 取出前 C3_topCount 筆資料
   const topData = sortData.slice(0, C3_topCount)
-  topData.push(otherData)
-  // console.log('C3_prodsInc: ', topData)
+  if (otherData.length !== 0) topData.push(otherData)
+  console.log('C3_prodsInc: ', topData)
   return topData
 }
 
 // C3 - 全品項營收顏色處理
 function C3_prodsIncColors(obj) {
-  const { data, C3_topCount, C3_otherText } = obj
-  const C3_colorsProps = data.map(item => item[0])
+  const { data, C3_otherText } = obj
+  let C3_colorsProps = data.map(item => item[0])
+  // 排除"其他"
+  C3_colorsProps = C3_colorsProps.filter(item => item !== C3_otherText)
   // 取出顏色物件屬性陣列
   const colorsProps = Object.keys(colors)
-  // 取出顏色物件屬性陣列前 C3_topCount // 3
-  const colorsTopProps = colorsProps.slice(0, C3_topCount)
+  // 取出顏色物件除了 other 的屬性
+  const colorsTopProps = colorsProps.slice(0, colorsProps.length - 1)
   // 取出顏色物件屬性陣列最後一個 // other
-  const colorsOtherProps = colorsProps.pop()
+  const colorsOtherProps = colorsProps[colorsProps.length - 1]
   // 組合顏色物件
   const C3_colorsObj = C3_colorsProps.reduce((obj, item, index) => {
-    item === C3_otherText || index >= colorsTopProps.length
-      ? obj[item] = colors[colorsOtherProps]
-      : obj[item] = colors[colorsTopProps[index]]
-    return obj
+    if (index < colorsProps.length) obj[item] = colors[colorsTopProps[index]]
+    let otherObj = { [C3_otherText]: colors[colorsOtherProps] }
+    return { ...obj, ...otherObj }
   }, {})
-  // console.log('C3_colorsObj: ', C3_colorsObj)
+  console.log('C3_colorsObj: ', C3_colorsObj)
   return C3_colorsObj
+}
+
+// C3 - 全品項營收顯示幾筆 select
+function C3_topCountSelectRender(max) {
+  let optionHtml = ``
+  for (let i = 2; i <= max; i++) {
+    optionHtml += `
+    <option
+      value="${i}"
+      ${i > C3_prodsIncfilterData.length - 1 ? 'disabled' : ''}
+      ${i === C3_topCount ? 'selected' : ''}
+    >${i}</option>
+    `
+  }
+  C3_topCountSelect.innerHTML = optionHtml
+}
+
+// C3 - 全品項營收顯示幾筆選擇
+function C3_topCountSelectTask(e) {
+  C3_topCount = e.target.value
+
+  C3_prodsIncTopData = C3_filterTopData({
+    data: C3_prodsIncData,
+    C3_topCount,
+    C3_otherText
+  })
+
+  C3_prodsColorsData = C3_prodsIncColors({
+    data: C3_prodsIncTopData,
+    C3_topCount,
+    C3_otherText
+  })
+
+  C3_allProdsIncRender({ C3_prodsIncTopData, C3_prodsColorsData })
 }
 
 // 渲染訂單列表
@@ -175,10 +216,6 @@ async function RENDER_orders(data) {
       return html
     }, ``)
     orderList.innerHTML = ordersHTML
-    // 全產品類別營收比重
-    C3_sortIncRender(C3_sortIncTask(ordersData))
-    // 全品項營收比重
-    C3_allProdsIncRender(await C3_prodsIncTask(ordersData))
   }
   catch (err) {
     throw err
@@ -193,6 +230,12 @@ async function renderOrdersTask() {
     ordersData = ordersDataRes.data.orders
     console.log('ordersData: ', ordersData)
     RENDER_orders(ordersData)
+    // 全產品類別營收比重
+    C3_sortIncRender(C3_sortIncTask(ordersData))
+    // 全品項營收比重
+    C3_allProdsIncRender(await C3_prodsIncTask(ordersData))
+    // 渲染全品項營收比重筆數 option
+    C3_topCountSelectRender(prodsData.length)
   }
   catch (err) {
     throw err
@@ -312,3 +355,4 @@ function clearAllOrders(e) {
 orderList.addEventListener('click', orderStatusChange, false)
 orderList.addEventListener('click', orderDelete, false)
 clearOrdersBtn.addEventListener('click', clearAllOrders, false)
+C3_topCountSelect.addEventListener('change', C3_topCountSelectTask, false)
